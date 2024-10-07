@@ -10,7 +10,8 @@ renderPokemon(shuffle(data));
 function renderPokemon(list) {
   dataRow.textcontent = "";
   list.forEach((pokemonObj) => {
-    PokemonCard(pokemonObj);
+    const pokemon = PokemonCard(pokemonObj);
+    dataRow.appendChild(pokemon);
   });
 }
 function handleSearch(input) {

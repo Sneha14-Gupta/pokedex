@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Teachers:ital,wght@0,400..800;1,400..800&display=swap");
+* {
+  font-family: "Teachers", monospace;
+}
+body {
+    background: #70e1f5;  
+    background: linear-gradient(to right, #ffd194, #70e1f5); 
+}    
+.card {
+  height: 100%;
+  transition: all ease 1s ;
+  border-radius: 1rem;
+}
+.card:hover{
+    transform: scale(1.03);
+}
