@@ -1,12 +1,31 @@
 import data from "./data.json";
-import PokemonCard from "./components/PokemonCard"
-import arrayShuffle from "array-shuffle";
+import PokemonCard from "./components/PokemonCard";
+import shuffle from "array-shuffle";
+const inputEl = document.querySelector("input");
+const dataRow = document.querySelector("[data-row]");
+
 // data.forEach(Pokemon);
-renderPokemon(data);
+renderPokemon(shuffle(data));
 
-function renderPokemon(list){
-  list.forEach((pokemonObj)=>{
-    PokemonCard(pokemonObj)
-  })
+function renderPokemon(list) {
+  dataRow.textcontent = "";
+  list.forEach((pokemonObj) => {
+    PokemonCard(pokemonObj);
+  });
 }
-
+function handleSearch(input) {
+  const filteredPokemon = data.filter((pokemonObj) => {
+    pokemonObj.name.toLowerCase().includes(input);
+  });
+  renderPokemon(filteredPokemon);
+}
+inputEl.addEventListener("input", (e) => {
+  handleSearch(e.target.value.trim().toLowerCase());
+});
+//for keyboard accesibility
+document.addEventListener("keydown", (e) => {
+  if (e.key === "/") {
+    e.preventDefault();
+    inputEl.focus();
+  }
+});
