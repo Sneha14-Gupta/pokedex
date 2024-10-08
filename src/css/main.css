@@ -3,8 +3,9 @@
   font-family: "Teachers", monospace;
 }
 body {
-    background: #70e1f5;  
-    background: linear-gradient(to right, #ffd194, #70e1f5); 
+    /* background: #70e1f5;  
+    background: linear-gradient(to right, #ffd194, #70e1f5);  */
+    transition: background-color 1s ease;
 }    
 .card {
   height: 100%;
@@ -13,4 +14,6 @@ body {
 }
 .card:hover{
     transform: scale(1.03);
+    /* background: #7027CF;
+    background: linear-gradient(0deg, #7027CF, #7AB889);; */
 }
