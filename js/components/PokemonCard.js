@@ -9,7 +9,7 @@ export default function PokemonCard(data) {
                   <div class="card-body">
                     <h5 class="card-title">${name}</h5>
                     <p class="card-text">${description}</p>
-                    <a class="btn btn-primary" href="${link}" role="button">Visit</a>
+                    ${link ?`<a class="btn btn-primary" href="${link}" role="button">Visit</a>`:""}
       
             </div>`;
   return div;
