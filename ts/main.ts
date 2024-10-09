@@ -1,12 +1,15 @@
 import shuffle from "array-shuffle";
 import Fuse from "fuse.js";
 import data from "./data.json";
+// import main.scss file
+import "../src/scss/main.scss";
+
 import PokemonCard from "./components/PokemonCard";
-const inputEl = document.querySelector("input");
-const dataRow = document.querySelector("[data-row]");
+const inputEl = document.querySelector("input") as HTMLInputElement;
+const dataRow = document.querySelector("[data-row]") as HTMLDivElement;
 //data.forEach(Pokemon);
 renderPokemon(shuffle(data));
-function renderPokemon(list) {
+function renderPokemon(list:object[]):void{
   dataRow.textContent = "";
   if (!list.length) {
     const pokemon = PokemonCard({
@@ -24,7 +27,7 @@ function renderPokemon(list) {
     dataRow.appendChild(pokemon);
   });
 }
-function handleSearch(input) {
+function handleSearch(input:string):void {
   const options = {
     keys: ["name", "abilities"],
     threshold: 0.5,
@@ -32,16 +35,17 @@ function handleSearch(input) {
   //
   const fuse = new Fuse(data, options);
   // perform search fxn
-  function performSearch() {
+  function performSearch() :object[]{
     if (!input) return data;
     const searched = fuse.search(input);
     return searched.map((obj) => obj.item);
   }
-  let debouceTimer;
+  let debouceTimer:ReturnType<typeof setTimeout>;
   inputEl.addEventListener("input", (e) => {
     clearTimeout(debouceTimer);
+    const target=e.target as HTMLInputElement
     debouceTimer = setTimeout(() => {
-      handleSearch(e.target.value.trim().toLowerCase());
+      handleSearch(target.value.trim().toLowerCase());
     }, 500);
   });
   const filteredPokemon = performSearch();
@@ -52,7 +56,7 @@ inputEl.addEventListener("input", (e) => {
   handleSearch(e.target.value.trim().toLowerCase());
 });
 //for keyboard accesibility
-document.addEventListener("keydown", (e) => {
+document.addEventListener("keydown", (e:KeyboardEvent) => {
   if (e.key === "/") {
     e.preventDefault();
     inputEl.focus();
