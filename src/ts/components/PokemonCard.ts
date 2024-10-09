@@ -1,4 +1,4 @@
-export default function PokemonCard(data) {
+export default function PokemonCard(data): HTMLDivElement {
   // obj destructuring
   const { image, link, description, name } = data;
   const div = document.createElement("div");
