@@ -1,10 +1,10 @@
 import shuffle from "array-shuffle";
 import Fuse from "fuse.js";
 import data from "./data.json";
+// import main.scss file
 import "../src/scss/main.scss";
 import PokemonCard from "./components/PokemonCard";
-
-// Custom type representing a Pokemon card
+// custom type representing pokemon card
 interface Pokemon {
   id: number;
   name: string;
@@ -13,66 +13,65 @@ interface Pokemon {
   link: string;
   abilities: string[];
 }
-
-// DOM targeting
+// dom targeting
 const inputEl = document.querySelector("input") as HTMLInputElement;
 const dataRow = document.querySelector("[data-row]") as HTMLDivElement;
-
-// Initial render with shuffled data
+//data.forEach(Pokemon);
 renderPokemon(shuffle(data));
-
-// Function for rendering Pokemon cards
+// fxn for rendering card
 function renderPokemon(list: Pokemon[]): void {
   dataRow.textContent = "";
-  
   if (!list.length) {
     const pokemon = PokemonCard({
-      image: "https://static1.cbrimages.com/wordpress/wp-content/uploads/2022/08/Ash-Pokemon.jpg",
+      image:
+        "https://static1.cbrimages.com/wordpress/wp-content/uploads/2022/08/Ash-Pokemon.jpg",
       name: "Not Found",
+      // link: "https://pokedex.com",
       description: "Try another search",
     });
     dataRow.appendChild(pokemon);
     return;
   }
-
   list.forEach((pokemonObj) => {
     const pokemon = PokemonCard(pokemonObj);
     dataRow.appendChild(pokemon);
   });
 }
-
-// Function for performing search with Fuse.js
-function performSearch(input: string): Pokemon[] {
+function handleSearch(input: string): void {
   const options = {
     keys: ["name", "abilities"],
     threshold: 0.5,
   };
-
+  //
   const fuse = new Fuse(data, options);
-
-  if (!input) return data;
-
-  const searched = fuse.search(input);
-  return searched.map((result) => result.item);
+  // perform search fxn
+  function performSearch(): Pokemon[] {
+    if (!input) return data;
+    const searched = fuse.search(input);
+    return searched.map((obj) => obj.item);
+  }
+  inputEl.addEventListener("input", (e) => {
+    const target = e.target as HTMLInputElement;
+    handleSearch(target.value.trim().toLowerCase());
+  });
+  let debouceTimer: ReturnType<typeof setTimeout>;
+  inputEl.addEventListener("input", (e) => {
+    clearTimeout(debouceTimer);
+    const target = e.target as HTMLInputElement;
+    debouceTimer = setTimeout(() => {
+      handleSearch(target.value.trim().toLowerCase());
+    }, 1000);
+  });
+  const filteredPokemon = performSearch();
+  renderPokemon(filteredPokemon);
+  // renderPokemon(filteredPokemon);
 }
 
-// Debounced search handling
-let debounceTimer: ReturnType<typeof setTimeout>;
-
-inputEl.addEventListener("input", (e: Event) => {
-  const target = e.target as HTMLInputElement;
-  clearTimeout(debounceTimer);
-
-  debounceTimer = setTimeout(() => {
-    const filteredPokemon = performSearch(target.value.trim().toLowerCase());
-    renderPokemon(filteredPokemon);
-  }, 5000);
-});
-
-// For keyboard accessibility
+//for keyboard accesibility
 document.addEventListener("keydown", (e: KeyboardEvent) => {
   if (e.key === "/") {
     e.preventDefault();
     inputEl.focus();
   }
 });
+// console.log(data.length);
