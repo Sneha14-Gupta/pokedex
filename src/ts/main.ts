@@ -75,28 +75,3 @@ document.addEventListener("keydown", (e: KeyboardEvent) => {
   }
 });
 // console.log(data.length);
-const colors = [
-  "#433878",
-  "#8967B3",
-  "#3357FF",
-  "#D2E0FB",
-  "#7EACB5",
-  "#6A9C89",
-  "#295F98",
-  "#D7C3F1",
-  "#704264",
-  "#704264",
-  "#D1E9F6",
-  "#FEFFD2",
-  "#FC819E",
-  "#674188",
-  "#134B70",
-  "#921A40",
-];
-let currentIndex = 0;
-
-setInterval(() => {
-  // Change the background color
-  document.body.style.backgroundColor = colors[currentIndex];
-  currentIndex = (currentIndex + 1) % colors.length;
-}, 2000);
