@@ -5,11 +5,22 @@ import data from "./data.json";
 import "../src/scss/main.scss";
 
 import PokemonCard from "./components/PokemonCard";
+// custom type representing pokemon card
+interface Pokemon {
+  id: number;
+  name: string;
+  image: string;
+  description: string;
+  link: string;
+  abilities: string[];
+}
+// dom targeting
 const inputEl = document.querySelector("input") as HTMLInputElement;
 const dataRow = document.querySelector("[data-row]") as HTMLDivElement;
 //data.forEach(Pokemon);
 renderPokemon(shuffle(data));
-function renderPokemon(list:object[]):void{
+// fxn for rendering card
+function renderPokemon(list: Pokemon[]): void {
   dataRow.textContent = "";
   if (!list.length) {
     const pokemon = PokemonCard({
@@ -27,7 +38,7 @@ function renderPokemon(list:object[]):void{
     dataRow.appendChild(pokemon);
   });
 }
-function handleSearch(input:string):void {
+function handleSearch(input: string): void {
   const options = {
     keys: ["name", "abilities"],
     threshold: 0.5,
@@ -35,15 +46,15 @@ function handleSearch(input:string):void {
   //
   const fuse = new Fuse(data, options);
   // perform search fxn
-  function performSearch() :object[]{
+  function performSearch(): Pokemon[] {
     if (!input) return data;
     const searched = fuse.search(input);
     return searched.map((obj) => obj.item);
   }
-  let debouceTimer:ReturnType<typeof setTimeout>;
+  let debouceTimer: ReturnType<typeof setTimeout>;
   inputEl.addEventListener("input", (e) => {
     clearTimeout(debouceTimer);
-    const target=e.target as HTMLInputElement
+    const target = e.target as HTMLInputElement;
     debouceTimer = setTimeout(() => {
       handleSearch(target.value.trim().toLowerCase());
     }, 500);
@@ -53,10 +64,11 @@ function handleSearch(input:string):void {
   // renderPokemon(filteredPokemon);
 }
 inputEl.addEventListener("input", (e) => {
-  handleSearch(e.target.value.trim().toLowerCase());
+  const target = e.target as HTMLInputElement;
+  handleSearch(target.value.trim().toLowerCase());
 });
 //for keyboard accesibility
-document.addEventListener("keydown", (e:KeyboardEvent) => {
+document.addEventListener("keydown", (e: KeyboardEvent) => {
   if (e.key === "/") {
     e.preventDefault();
     inputEl.focus();
