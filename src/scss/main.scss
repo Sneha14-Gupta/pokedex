@@ -15,5 +15,7 @@ body {
 
   &:hover {
     transform: scale(1.03);
+    background: #e14ab2;
+    background: linear-gradient(135deg, #e14ab2, #4cbdff);
   }
 }
