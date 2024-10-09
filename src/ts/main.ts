@@ -66,7 +66,7 @@ inputEl.addEventListener("input", (e: Event) => {
   debounceTimer = setTimeout(() => {
     const filteredPokemon = performSearch(target.value.trim().toLowerCase());
     renderPokemon(filteredPokemon);
-  }, 500);
+  }, 5000);
 });
 
 // For keyboard accessibility
