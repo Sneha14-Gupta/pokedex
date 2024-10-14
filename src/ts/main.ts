@@ -2,19 +2,12 @@ import shuffle from "array-shuffle";
 import Fuse from "fuse.js";
 import data from "./data.json";
 
+import { Pokemon } from "./interface/pokemon";
+
 // Import main.scss file
 import "../scss/main.scss";
 import PokemonCard from "./components/PokemonCard";
 
-// Custom type representing a Pokemon card
-interface Pokemon {
-  id: number;
-  name: string;
-  image: string;
-  description: string;
-  link: string;
-  abilities: string[];
-}
 
 // DOM targeting
 const inputEl = document.querySelector("input") as HTMLInputElement;
@@ -73,9 +66,8 @@ inputEl.addEventListener("input", (e: Event) => {
 });
 
 // For keyboard accessibility
-document.addEventListener("keydown", (e: KeyboardEvent) => {
+document.addEventListener("keyup", (e: KeyboardEvent) => {
   if (e.key === "/") {
-    e.preventDefault();
     inputEl.focus();
   }
 });
